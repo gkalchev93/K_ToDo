@@ -1,0 +1,62 @@
+﻿@model ToDoApplication.Models.TaskEntity
+@{
+    ViewBag.Title = "CreateNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center>
+    <h2>Create New Task</h2>
+</center>
+
+<center>
+    @using (Html.BeginForm("CreateTask", "Task"))
+    {
+        <p>@Html.EditorFor(model => model.TaskTitle, new { htmlAttributes = new { @placeHolder = "Task Title", @class = "input-text" } })</p>
+        <p>@Html.TextAreaFor(model => model.TaskDesc, new { @class = "input-text", @rows = 3, @placeholder = "Task Description", @style = "resize:none" })</p>
+        <p>
+            @Html.LabelFor(model => model.DueDate)<br>
+            @Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "input-text", type = "date" } })
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Priority)<br>
+            @Html.EnumDropDownListFor(model => model.Priority, EnumHelper.GetSelectList(typeof(ToDoApplication.Models.Enums.Priority)))
+        </p>
+        <p><input type="submit" value="Create" class="btn btn-default input-submit" /></p>
+    }
+</center>
+
+
+<style>
+
+    .input-group {
+    }
+
+    .input-text, select {
+        width: 400px;
+        border: 2px solid #aaa;
+        border-radius: 4px;
+        margin: 8px 0;
+        outline: none;
+        padding: 8px;
+        box-sizing: border-box;
+        transition: .3s;
+    }
+
+        .input-text:focus, select:focus, .input-submit:hover {
+            border-color: dodgerBlue;
+            box-shadow: 0 0 8px 0 dodgerBlue;
+        }
+
+
+    .input-submit {
+        width: 400px;
+        border: 2px solid #aaa;
+        border-radius: 4px;
+        margin: 8px 0;
+        outline: none;
+        padding: 8px;
+        box-sizing: border-box;
+        transition: .3s;
+        background-color: lightgray;
+    }
+</style>

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ToDoApplication.Models.TaskEntity>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="taskList">
+    @if (Model != null && Model.Count() > 0)
+    {
+        foreach (var item in Model.OrderBy(x => x.Priority))
+        {
+            if (!item.Completed)
+            {
+                <div class="taskCard">
+                    <a href="javascript:;"><span class="glyphicon glyphicon-edit edit-icon"></span></a>
+                    <h1>@item.TaskTitle</h1>
+                    <p class="title">@item.TaskDesc</p>
+                    <p>@item.DueDate.ToShortDateString()</p>
+                    <p>@item.Priority</p>
+                    <p><button>Done</button></p>
+                </div>
+            }
+        }
+    }
+    else
+    {
+        <h1>There is no tasks.</h1>
+    }
+</div>
+
+<div id="openModal" style="display:none">
+    @{Html.RenderAction("EditView", "Task", "new {}");}
+</div>
+
+<!-- #region Style -->
+<style>
+    .taskList {
+        margin-top: 30px;
+    }
+
+    .taskCard {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        width: 300px;
+        margin-left: 15px;
+        margin-top: 10px;
+        float: left;
+        text-align: center;
+    }
+
+    .title {
+        color: grey;
+        font-size: 18px;
+        white-space: pre-line;
+    }
+
+    button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: green;
+        text-align: center;
+        width: 100%;
+        font-size: 18px;
+    }
+
+        button:hover {
+            opacity: 0.7;
+        }
+
+    .edit-icon {
+        float: right;
+        margin: 3px;
+    }
+
+        .edit-icon:hover {
+            color: dodgerblue;
+            cursor: pointer;
+        }
+</style>
+<!-- #endregion -->
+<!-- #region Javascript -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+      rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(function () {
+        $("#dialog").dialog({
+            autoOpen: false,
+            modal: true,
+            title: "Task Edit:"
+        });
+    })
+</script>
+<!-- #endregion -->
